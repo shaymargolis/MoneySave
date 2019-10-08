@@ -1,14 +1,20 @@
-const http = require('http');
+// Bring in our dependencies
+const express = require('express');
+const app = express();
+const path = require('path');
+const routes = require('./routes');
+const bodyParser = require('body-parser');
 
-const hostname = '127.0.0.1';
-const port = 3000;
+// Set view engine
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World\n');
-});
+//  Connect all our routes to our application
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('public'));
+app.use('/', routes);
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+// Turn on that server!
+app.listen(3000, () => {
+  console.log('App listening on port 3000');
 });
