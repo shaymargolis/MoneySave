@@ -25,25 +25,39 @@ block content
         input(type="radio", name="is_outcome", value="false", autocomplete="off")
 
     br
+    br
 
-    label(for="sum") סכום:
-    input(
-      type="number"
-      id="sum"
-      name="sum"
-      class="form-control"
-      value=data.sum
-    )
+    div.input-group.mb-3
+      div.input-group-prepend
+        span.input-group-text ₪
+      input(
+        type="number"
+        id="sum"
+        name="sum"
+        class="form-control"
+        value=data.sum
+        aria-describedby="basic-addon1"
+      )
 
     label(for="datetime") תאריך:
-    input(
-      type="datetime"
-      id="datetime"
-      name="datetime"
-      class="form-control"
-      placeholder="dd/mm/YYYY HH:mm"
-      value=data.datetime
-    )
+    div.input-group.mb-3
+      div.input-group-prepend
+        button.btn.btn-outline-secondary(type="button", id='setNow') עכשיו
+
+      input.form-control(
+        id='datetime',
+        type="text", placeholder="dd/mm/YYYY HH:mm", value=data.datetime, name='datetime'
+        aria-describedby="basic-addon1"
+      )
+
+    script.
+      $("#setNow").click(function() {
+        var date = new Date();
+        $("#datetime").val(
+          $.datepicker.formatDate('dd/mm/yy ', date) +
+          date.getHours() + ":" + date.getMinutes()
+        );
+      })
 
     label(for="type") סוג העסקה:
     input(
