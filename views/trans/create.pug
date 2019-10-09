@@ -1,4 +1,11 @@
-extends ../layout
+extends layout
+
+block headaddon
+  link(rel='stylesheet', href='/css/bootstrap-tagsinput.css')
+  link(rel='stylesheet', href='/css/typeaheadjs.css')
+
+  script(src="/js/bootstrap-tagsinput.js")
+  script(src="/js/typeahead.bundle.min.js")
 
 block content
   -data = data || {}
@@ -8,27 +15,106 @@ block content
       for error in errors
         li= error.msg
 
-  form(action="." method="POST" class="form-registration")
-    label(for="name") Name:
+  form(action="/trans/create" method="POST" class="form-registration")
+    h1 הוספת עסקה
+
+    div.btn-group.btn-group-toggle(data-toggle="buttons")
+      label.btn.btn-secondary.active הוצאה
+        input(type="radio", name="is_outcome", value="true", autocomplete="off", checked)
+      label.btn.btn-secondary הכנסה
+        input(type="radio", name="is_outcome", value="false", autocomplete="off")
+
+    br
+
+    label(for="sum") סכום:
+    input(
+      type="number"
+      id="sum"
+      name="sum"
+      class="form-control"
+      value=data.sum
+    )
+
+    label(for="datetime") תאריך:
+    input(
+      type="datetime"
+      id="datetime"
+      name="datetime"
+      class="form-control"
+      placeholder="dd/mm/YYYY HH:mm"
+      value=data.datetime
+    )
+
+    label(for="type") סוג העסקה:
     input(
       type="text"
-      id="name"
-      name="name"
+      id="type"
+      name="type"
       class="form-control"
-      value=data.name
+      value=data.type
     )
 
-    label(for="email") Email:
+    script.
+      var types_source = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: '/ajax/trans_types/%QUERY',
+          wildcard: '%QUERY'
+        }
+      });
+      types_source.initialize();
+
+      $('#type').typeahead(null, {
+        name: 'types_source',
+        displayKey: function(types) {
+          return types.name;
+        },
+        source: types_source.ttAdapter()
+      });
+
+    label(for="tags") תגיות העסקה:
     input(
-      type="email"
-      id="email"
-      name="email"
+      type="text"
+      id="tags"
+      name="tags"
       class="form-control"
-      value=data.email
+      value=data.tags
     )
 
-    input(
-      type="submit"
-      value="Submit"
-      class="btn btn-lg btn-primary btn-block"
-    )
+    script.
+      var tags_source = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: '/ajax/trans_tags/%QUERY',
+          wildcard: '%QUERY'
+        }
+      });
+      tags_source.initialize();
+
+      $('#tags').tagsinput({
+        tagClass: function(item) {
+          return "btn btn-info";
+        },
+        typeaheadjs: {
+          name: 'tags_source',
+          displayKey: 'name',
+          valueKey: 'name',
+          source: tags_source.ttAdapter()
+        }
+      });
+
+    br
+
+    button(type="submit", class="btn btn-primary") הוספה
+
+    script.
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
+        });

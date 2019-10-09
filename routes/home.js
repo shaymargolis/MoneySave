@@ -9,5 +9,5 @@ module.exports = (req, res) => {
   });
   user.save()*/
 
-  res.render('trans/create', { title: 'Registration form' });
+  res.render("summary")
 };

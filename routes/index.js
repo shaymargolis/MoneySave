@@ -1,13 +1,10 @@
 const routes = require('express').Router();
 
 // Create "/" paths
-const home = require('./home');
-
-routes.get('/', home);
+routes.get('/', require('./home'));
 
 module.exports = routes;
 
 // Add another paths
-const trans = require('./trans');
-
-routes.use('/trans', trans);
+routes.use('/trans', require('./trans'));
+routes.use('/ajax', require('./ajax'));
