@@ -1,7 +1,11 @@
 const routes = require('express').Router();
 
 // Create "/" paths
-routes.get('/', require('./home'));
+routes.get('/', function (req, res) {
+  res.redirect('/summary');
+});
+
+routes.get('/summary', require('./summary'))
 
 module.exports = routes;
 
