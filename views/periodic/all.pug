@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  -data = data || {}
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  br
+
+  a.btn.btn-primary(href="/periodic/create") הוספה
+
+  br
+
+  if periodic_list
+    table.table.table-striped
+      thead
+        tr
+          th(scope="col") חוזר
+          th(scope="col") סוג
+          th(scope="col") סכום
+          th(scope="col") שם
+          th(scope="col") תגיות
+      tbody
+        each transaction in periodic_list
+          tr
+            td !{transaction.period}
+            td !{transaction.is_outcome}
+            td !{transaction.sum}
+            td !{transaction._transaction_type.title}
+            td
+              ul
+                if transaction._transaction_type._transaction_tags
+                  each tag in transaction._transaction_type._transaction_tags
+                    li !{tag.title}
+  else
+    div.my-errors לא נמצאו עסקות חודשיות.

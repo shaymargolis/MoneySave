@@ -1,0 +1,123 @@
+extends layout
+
+block headaddon
+  link(rel='stylesheet', href='/css/bootstrap-tagsinput.css')
+  link(rel='stylesheet', href='/css/typeaheadjs.css')
+
+  script(src="/js/bootstrap-tagsinput.js")
+  script(src="/js/typeahead.bundle.min.js")
+
+block content
+  -data = data || {}
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  form(action="/periodic/create" method="POST" class="form-registration")
+    h1 הוספת עסקה
+
+    div.btn-group.btn-group-toggle(data-toggle="buttons")
+      label.btn.btn-secondary.active הוצאה
+        input(type="radio", name="is_outcome", value="true", autocomplete="off", checked)
+      label.btn.btn-secondary הכנסה
+        input(type="radio", name="is_outcome", value="false", autocomplete="off")
+
+    br
+    br
+
+    div.input-group.mb-3
+      div.input-group-prepend
+        span.input-group-text ₪
+      input(
+        type="number"
+        id="sum"
+        name="sum"
+        class="form-control"
+        value=data.sum
+        aria-describedby="basic-addon1"
+      )
+
+    label(for="period") תקופה:
+    input(
+      type="text"
+      id="period"
+      name="period"
+      class="form-control"
+      value=data.period
+    )
+
+    label(for="type") סוג העסקה:
+    input(
+      type="text"
+      id="type"
+      name="type"
+      class="form-control"
+      value=data.type
+    )
+
+    script.
+      var types_source = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: '/ajax/trans_types/%QUERY',
+          wildcard: '%QUERY'
+        }
+      });
+      types_source.initialize();
+
+      $('#type').typeahead(null, {
+        name: 'types_source',
+        displayKey: function(types) {
+          return types.name;
+        },
+        source: types_source.ttAdapter()
+      });
+
+    label(for="tags") תגיות העסקה:
+    input(
+      type="text"
+      id="tags"
+      name="tags"
+      class="form-control"
+      value=data.tags
+    )
+
+    script.
+      var tags_source = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('text'),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+          url: '/ajax/trans_tags/%QUERY',
+          wildcard: '%QUERY'
+        }
+      });
+      tags_source.initialize();
+
+      $('#tags').tagsinput({
+        tagClass: function(item) {
+          return "btn btn-info";
+        },
+        typeaheadjs: {
+          name: 'tags_source',
+          displayKey: 'name',
+          valueKey: 'name',
+          source: tags_source.ttAdapter()
+        }
+      });
+
+    br
+
+    button(type="submit", class="btn btn-primary") הוספה
+
+    script.
+      $(document).ready(function() {
+        $(window).keydown(function(event){
+          if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
+        });

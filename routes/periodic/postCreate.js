@@ -1,6 +1,6 @@
 
 const mongoose = require('mongoose');
-const Transaction = mongoose.model("Transaction");
+const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 const TransactionType = mongoose.model("TransactionType");
 const TransactionTag = mongoose.model("TransactionTag");
 
@@ -20,17 +20,17 @@ async function createTransactionType(title, tags) {
   var type = new TransactionType({
     title: title,
     _transaction_tags: tags_arr,
-    _user: new mongoose.Schema.Types.ObjectId("5d9c6f8640c69501a866cf07")
+    _user: "5d9c6f8640c69501a866cf07"
   });
 
   return type;
 }
 
-function createTransaction(trans_type, sum, is_outcome, datetime) {
-  var trans = new Transaction({
+function createTransaction(trans_type, sum, is_outcome, period) {
+  var trans = new PeriodicTransaction({
     _transaction_type: trans_type,
     is_outcome: is_outcome,
-    datetime: datetime,
+    period: period,
     sum: sum
   });
 
@@ -40,10 +40,10 @@ function createTransaction(trans_type, sum, is_outcome, datetime) {
 function saveTypeAndSaveTransaction(obj, body, res) {
   obj.save();
 
-  var trans = createTransaction(obj, body.sum, body.is_outcome, body.datetime);
+  var trans = createTransaction(obj, body.sum, body.is_outcome, body.period);
   trans.save();
 
-  res.redirect('/?action=createTransaction&result=success');
+  res.redirect('/periodic/all?action=createTransaction&result=success');
 }
 
 module.exports = (req, res) => {

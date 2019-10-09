@@ -11,6 +11,7 @@ mongoose.connection
     console.log(`Connection error: ${err.message}`);
   });
 
+require('./models/PeriodicTransaction');
 require('./models/Transaction');
 require('./models/TransactionType');
 require('./models/TransactionTag');
