@@ -3,37 +3,42 @@ extends layout
 block content
   -data = data || {}
 
-  if errors
-    ul.my-errors
-      for error in errors
-        li= error.msg
+  if action
+    div.row
+      p !{action}, !{result}
 
-  br
+  div.row
+    a.btn.btn-primary(href="/periodic/create") הוספה
 
-  a.btn.btn-primary(href="/periodic/create") הוספה
+    br
 
-  br
-
-  if periodic_list
-    table.table.table-striped
-      thead
-        tr
-          th(scope="col") חוזר
-          th(scope="col") סוג
-          th(scope="col") סכום
-          th(scope="col") שם
-          th(scope="col") תגיות
-      tbody
-        each transaction in periodic_list
+    if (periodic_list.length != 0)
+      table.table.table-striped
+        thead
           tr
-            td !{transaction.period}
-            td !{transaction.is_outcome}
-            td !{transaction.sum}
-            td !{transaction._transaction_type.title}
-            td
-              ul
-                if transaction._transaction_type._transaction_tags
-                  each tag in transaction._transaction_type._transaction_tags
-                    li !{tag.title}
-  else
-    div.my-errors לא נמצאו עסקות חודשיות.
+            th(scope="col") חוזר
+            th(scope="col") סוג
+            th(scope="col") סכום
+            th(scope="col") שם
+            th(scope="col") תגיות
+            th(scope="col") פעולות
+        tbody
+          each transaction in periodic_list
+            tr
+              td !{transaction.period}
+              td
+                if (transaction.is_outcome == true)
+                  p הוצאה
+                else
+                  p הכנסה
+              td !{transaction.sum} ₪
+              td !{transaction._transaction_type.title}
+              td
+                ul
+                  if transaction._transaction_type._transaction_tags
+                    each tag in transaction._transaction_type._transaction_tags
+                      li !{tag.title}
+              td
+                a.btn.btn-primary(href="/periodic/"+transaction._id+"/delete") מחק
+    else
+      div.row לא נמצאו עסקות חודשיות.
