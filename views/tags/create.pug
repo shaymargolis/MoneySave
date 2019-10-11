@@ -1,0 +1,40 @@
+extends layout
+
+block headaddon
+  link(rel='stylesheet', href='/css/bootstrap-tagsinput.css')
+  link(rel='stylesheet', href='/css/typeaheadjs.css')
+
+  script(src="/js/bootstrap-tagsinput.js")
+  script(src="/js/typeahead.bundle.min.js")
+
+block content
+  -data = data || {}
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
+  div.row
+    form(action="/tags/create" method="POST" class="form-registration")
+      h1 הוספת תגית
+
+      label(for="title") שם:
+      input(
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        value=data.title
+      )
+
+      label(for="color") צבע:
+      select.form-control(
+        id="color"
+        name="color"
+      )
+        option Black
+        option Blue
+        option Orange
+
+      button(type="submit", class="btn btn-primary") הוספה

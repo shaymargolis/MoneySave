@@ -1,0 +1,29 @@
+extends layout
+
+block content
+  -data = data || {}
+
+  if action
+    div.row
+      p !{action}, !{result}
+
+  div.row
+    a.btn.btn-primary(href="/tags/create") הוספה
+
+  if (tag_list.length != 0)
+    div.row
+      table.table.table-striped
+        thead
+          tr
+            th(scope="col") שם
+            th(scope="col") צבע
+            th(scope="col") פעולות
+        tbody
+          each tag in tag_list
+            tr
+              td !{tag.title}
+              td !{tag.color}
+              td
+                a.btn.btn-primary(href="/tags/"+tag._id+"/delete") מחק
+  else
+    div.row לא נמצאו תגיות.

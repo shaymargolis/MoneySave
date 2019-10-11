@@ -12,7 +12,8 @@ block content
 
     br
 
-    if (periodic_list.length != 0)
+  if (periodic_list.length != 0)
+    div.row
       table.table.table-striped
         thead
           tr
@@ -40,5 +41,5 @@ block content
                       li !{tag.title}
               td
                 a.btn.btn-primary(href="/periodic/"+transaction._id+"/delete") מחק
-    else
-      div.row לא נמצאו עסקות חודשיות.
+  else
+    div.row לא נמצאו עסקות חודשיות.

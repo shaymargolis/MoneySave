@@ -12,4 +12,5 @@ module.exports = routes;
 // Add another paths
 routes.use('/trans', require('./trans'));
 routes.use('/periodic', require('./periodic'));
+routes.use('/tags', require('./tags'));
 routes.use('/ajax', require('./ajax'));
