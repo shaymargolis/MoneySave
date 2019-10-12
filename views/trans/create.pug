@@ -82,7 +82,7 @@ block content
       $('#type').typeahead(null, {
         name: 'types_source',
         displayKey: function(types) {
-          return types.name;
+          return types.title;
         },
         source: types_source.ttAdapter()
       });
@@ -113,8 +113,8 @@ block content
         },
         typeaheadjs: {
           name: 'tags_source',
-          displayKey: 'name',
-          valueKey: 'name',
+          displayKey: 'title',
+          valueKey: 'title',
           source: tags_source.ttAdapter()
         }
       });

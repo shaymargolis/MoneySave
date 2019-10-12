@@ -1,5 +1,11 @@
 
-module.exports = (req, res) => {
+const mongoose = require('mongoose');
+const TransactionType = mongoose.model("TransactionType");
+
+module.exports = async (req, res) => {
   var query = req.params.query;
-  res.status(200).json([{name: 'פיצה', color: 'success'},{name: 'עט', color: 'success'}]);
+
+  var result = await TransactionType.find({title: { $regex: '.*' + query + '.*' }});
+
+  res.status(200).json(result);
 };
