@@ -24,7 +24,7 @@ block content
         tbody
           each transaction in trans_list
             tr
-              td !{transaction.datetime}
+              td !{moment(transaction.datetime).format("DD/MM/YYYY HH:mm")}
               td
                 if (transaction._transaction_type.is_outcome == true)
                   p הוצאה
