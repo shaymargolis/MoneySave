@@ -42,6 +42,13 @@ async function getTagDescriptions(tags, is_outcome) {
     });
 
     var periodic = await PeriodicTransaction.find({
+      start_month: {
+        $lte: new Date()
+      },
+      $or: [
+        {end_month: null},
+        {end_month: {$gte: new Date()}}
+      ],
       _transaction_type: trans_types
     });
 
