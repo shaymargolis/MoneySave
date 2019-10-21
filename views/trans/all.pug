@@ -8,25 +8,23 @@ block content
       p !{action}, !{result}
 
   div.row
-    a.btn.btn-primary(href="/periodic/create") הוספה
+    a.btn.btn-primary(href="/trans/create") הוספה
 
-    br
-
-  if (periodic_list.length != 0)
+  if (trans_list.length != 0)
     div.row
       table.table.table-striped
         thead
           tr
-            th(scope="col") חוזר
+            th(scope="col") תאריך
             th(scope="col") סוג
             th(scope="col") סכום
             th(scope="col") שם
             th(scope="col") תגיות
             th(scope="col") פעולות
         tbody
-          each transaction in periodic_list
+          each transaction in trans_list
             tr
-              td !{transaction.period}
+              td !{transaction.datetime}
               td
                 if (transaction.is_outcome == true)
                   p הוצאה
@@ -36,6 +34,7 @@ block content
               td !{transaction._transaction_type.title}
               td !{transaction._transaction_type._transaction_tag.title}
               td
-                a.btn.btn-primary(href="/periodic/"+transaction._id+"/delete") מחק
+                a.btn.btn-primary(href="/trans/"+transaction._id+"/delete") מחק
   else
-    div.row לא נמצאו עסקות חודשיות.
+    div.row
+      p לא נמצאו עסקות.

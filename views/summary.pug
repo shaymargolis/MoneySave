@@ -6,27 +6,25 @@ block headaddon
 block main
   div.container
     div.row
-      h1 Welcome to MoneySave
+      h1 סקירת מצב
+      
+    div.row.justify-content-center
+      h3 סכום נותר לחסכון: !{remaining_sum}₪
 
+    div.row
       canvas(id="month-spending-chart", width="800", height="450")
 
       script.
         new Chart(document.getElementById("month-spending-chart"), {
             type: 'doughnut',
             data: {
-              labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+              labels: !{JSON.stringify(spending_circle.labels)},
               datasets: [
                 {
-                  label: "Population (millions)",
-                  backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                  data: [2478,5267,734,784,433]
+                  label: "סכום (₪)",
+                  backgroundColor: !{JSON.stringify(spending_circle.colors)},
+                  data: !{JSON.stringify(spending_circle.data)}
                 }
               ]
             },
-            options: {
-              title: {
-                display: true,
-                text: 'Predicted world population (millions) in 2050'
-              }
-            }
         });

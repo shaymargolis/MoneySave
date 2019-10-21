@@ -1,7 +1,15 @@
-const data = require('../../test_data/data.json');
 
-module.exports = (req, res) => {
-  const models = data.trans;
+const mongoose = require('mongoose');
+const Transaction = mongoose.model("Transaction");
 
-  res.status(200).json( models );
+module.exports = async (req, res) => {
+  Transaction.find().populate({
+      path: "_transaction_type",
+      populate: {
+        path: "_transaction_tag",
+      }
+    }).exec(function(err, all) {
+    res.render("trans/all", { trans_list: all, action: req.query.action, result: req.query.result })
+  });
+
 };
