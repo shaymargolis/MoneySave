@@ -9,10 +9,13 @@ block main
       h1 סקירת מצב
       
     div.row.justify-content-center
-      h3 סכום נותר לחסכון: !{remaining_sum}₪
+      h2
+        b סכום נותר לחסכון: !{remaining_sum}₪
 
     div.row
       div.col-sm
+        h3 הוצאות
+        
         canvas(id="month-spending-chart", width="500", height="400")
         script.
           new Chart($("#month-spending-chart"), {
@@ -32,6 +35,8 @@ block main
               }
           });
       div.col-sm
+        h3 הכנסות
+        
         canvas(id="month-earning-chart", width="500", height="400")
         script.
           new Chart($("#month-earning-chart"), {
