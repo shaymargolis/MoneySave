@@ -28,7 +28,7 @@ block content
             tr
               td !{transaction.period}
               td
-                if (transaction.is_outcome == true)
+                if (transaction._transaction_type.is_outcome == true)
                   p הוצאה
                 else
                   p הכנסה

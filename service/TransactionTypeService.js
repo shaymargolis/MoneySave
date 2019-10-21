@@ -7,6 +7,7 @@ class TransactionTypeService {
 
     if (find != null) {
       find._transaction_tag = transaction_tag;
+      find.is_outcome = is_outcome;
       find.save();
       return find;
     }
