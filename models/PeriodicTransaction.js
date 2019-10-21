@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const periodicTransactionSchema = new mongoose.Schema({
-  period: String,
   sum: Number,
+  start_month: Date,
+  end_month: Date,
   _transaction_type: { type: mongoose.Schema.Types.ObjectId, ref: 'TransactionType' },
 }, {
   timestamps: true

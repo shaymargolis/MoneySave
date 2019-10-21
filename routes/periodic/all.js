@@ -9,7 +9,12 @@ module.exports = async (req, res) => {
         path: "_transaction_tag",
       }
     }).exec(function(err, all) {
-    res.render("periodic/all", { periodic_list: all, action: req.query.action, result: req.query.result })
+    res.render("periodic/all", {
+      periodic_list: all,
+      action: req.query.action,
+      result: req.query.result,
+      moment: require('moment')
+    })
   });
 
 };

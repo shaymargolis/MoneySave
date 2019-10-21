@@ -17,16 +17,16 @@ block content
       table.table.table-striped
         thead
           tr
-            th(scope="col") חוזר
             th(scope="col") סוג
             th(scope="col") סכום
             th(scope="col") שם
+            th(scope="col") תחילה
+            th(scope="col") סוף
             th(scope="col") תגיות
             th(scope="col") פעולות
         tbody
           each transaction in periodic_list
             tr
-              td !{transaction.period}
               td
                 if (transaction._transaction_type.is_outcome == true)
                   p הוצאה
@@ -34,10 +34,17 @@ block content
                   p הכנסה
               td !{transaction.sum} ₪
               td !{transaction._transaction_type.title}
+              td !{moment(transaction.start_month).format("MM/YYYY")}
+              td 
+                if (transaction.end_month == null)
+                  p ∞
+                else
+                  p !{moment(transaction.end_month).format("MM/YYYY")}
               td 
                 if (transaction._transaction_type._transaction_tag != null)
                   p !{transaction._transaction_type._transaction_tag.title}
               td
-                a.btn.btn-primary(href="/periodic/"+transaction._id+"/delete") מחק
+                a.btn.btn-primary.mr-1(href="/periodic/"+transaction._id+"/edit") ערוך
+                a.btn.btn-danger(href="/periodic/"+transaction._id+"/delete") מחק
   else
     div.row לא נמצאו עסקות חודשיות.

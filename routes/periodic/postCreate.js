@@ -16,7 +16,8 @@ module.exports = async (req, res) => {
   PeriodicTransactionService.newTransaction(
     user,
     body.is_outcome,
-    body.period,
+    body.start_month,
+    body.end_month,
     body.sum,
     body.type,
     body.tag

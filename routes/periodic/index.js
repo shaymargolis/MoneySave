@@ -7,5 +7,6 @@ models.post('/create', require('./postCreate'))
 
 // Private operations
 models.get('/:id/delete', require('./getDelete'))
+models.get('/:id/edit', require('./getEdit'))
 
 module.exports = models;
