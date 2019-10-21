@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 
 module.exports = async (req, res) => {
-  var periodic_list = PeriodicTransaction.populate({
+  var periodic_list = PeriodicTransaction.find().populate({
       path: "_transaction_type",
       populate: {
         path: "_transaction_tag",

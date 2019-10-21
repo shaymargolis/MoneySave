@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const TransactionType = mongoose.model("TransactionType");
 
 class TransactionTypeService {
-  static async updateOrCreateByTitle(title, user, transaction_tag) {
+  static async updateOrCreateByTitle(title, is_outcome, user, transaction_tag) {
     var find = await TransactionType.findOne({ title: title, _user: user }).lean(false);
 
     if (find != null) {
@@ -13,6 +13,7 @@ class TransactionTypeService {
 
     var newType = new TransactionType({
       title: title,
+      is_outcome: is_outcome,
       _user: user,
       _transaction_tag: transaction_tag,
     });
