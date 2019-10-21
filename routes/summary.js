@@ -23,78 +23,60 @@ function getChartJsObject(tags) {
   };
 }
 
+async function getTagDescriptions(tags, is_outcome) {
+  var total_sum = 0;
+  var tag_desc = {};
+
+  for (let tag of tags) {
+    var trans_types = await TransactionType.find({
+      _transaction_tag: tag._id,
+      is_outcome: is_outcome
+    });
+
+    var transactions = await Transaction.find({
+      datetime: {
+        $gte: moment().startOf('month').toDate(),
+        $lte: moment().endOf('month').toDate()
+      },
+      _transaction_type: trans_types
+    });
+
+    var periodic = await PeriodicTransaction.find({
+      _transaction_type: trans_types
+    });
+
+    transactions = transactions.concat(periodic);
+
+    tag_desc[tag.title] = {sum: 0, color: tag.color};
+
+    for (let trans of transactions) {
+      tag_desc[tag.title].sum += trans.sum;
+    }
+
+    total_sum += tag_desc[tag.title].sum;
+  }
+
+  return {total_sum: total_sum, tag_desc: tag_desc};
+}
+
 module.exports = async (req, res) => {
   var tags = await TransactionTag.find();
-  var sum_tags = {};
-  var recieve_tags = {};
-  var total_spent = 0;
-  var total_recieved = 0;
 
-  for (let tag of tags) {
-    var trans_types = await TransactionType.find({
-      _transaction_tag: tag._id,
-      is_outcome: false
-    });
+  var spent = await getTagDescriptions(tags, true);
+  var earned = await getTagDescriptions(tags, false);
 
-    var transactions = await Transaction.find({
-      datetime: {
-        $gte: moment().startOf('month').toDate(),
-        $lte: moment().endOf('month').toDate()
-      },
-      _transaction_type: trans_types
-    });
+  var total_spent = spent.total_sum;
+  var spent_tags = spent.tag_desc;
+  var total_earned = earned.total_sum;
+  var earned_tags = earned.tag_desc;
 
-    var periodic = await PeriodicTransaction.find({
-      _transaction_type: trans_types
-    });
-
-    transactions = transactions.concat(periodic);
-
-    recieve_tags[tag.title] = {sum: 0, color: tag.color};
-
-    for (let trans of transactions) {
-      recieve_tags[tag.title].sum += trans.sum;
-    }
-
-    total_recieved += recieve_tags[tag.title].sum;
-  }
-
-  for (let tag of tags) {
-    var trans_types = await TransactionType.find({
-      _transaction_tag: tag._id,
-      is_outcome: true
-    });
-
-    var transactions = await Transaction.find({
-      datetime: {
-        $gte: moment().startOf('month').toDate(),
-        $lte: moment().endOf('month').toDate()
-      },
-      _transaction_type: trans_types
-    });
-
-    var periodic = await PeriodicTransaction.find({
-      _transaction_type: trans_types
-    });
-
-    transactions = transactions.concat(periodic);
-
-    sum_tags[tag.title] = {sum: 0, color: tag.color};
-
-    for (let trans of transactions) {
-      sum_tags[tag.title].sum += trans.sum;
-    }
-
-    total_spent += sum_tags[tag.title].sum;
-  }
-
-  if (total_recieved > total_spent) {
-    sum_tags["נותר"] = {sum: total_recieved-total_spent, color: "gray"};
+  if (total_earned > total_spent) {
+    spent_tags["נותר"] = {sum: total_earned-total_spent, color: "gray"};
   }
 
   res.render("summary", {
-    remaining_sum: total_recieved-total_spent,
-    spending_circle: getChartJsObject(sum_tags),
-    earning_circle: getChartJsObject(recieve_tags)
+    remaining_sum: total_earned-total_spent,
+    spending_circle: getChartJsObject(spent_tags),
+    earning_circle: getChartJsObject(earned_tags)
   })
 };
