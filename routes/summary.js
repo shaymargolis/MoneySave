@@ -6,6 +6,23 @@ const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 const TransactionType = mongoose.model("TransactionType");
 const TransactionTag = mongoose.model("TransactionTag");
 
+function getChartJsObject(tags) {
+  var tag_values = Object.keys(tags);
+  var tag_colors = [];
+  var tag_sums = [];
+
+  for (let tag of tag_values) {
+    tag_colors.push(tags[tag].color);
+    tag_sums.push(tags[tag].sum);
+  }
+
+  return {
+    labels: tag_values,
+    colors: tag_colors,
+    data: tag_sums
+  };
+}
+
 module.exports = async (req, res) => {
   var tags = await TransactionTag.find();
   var sum_tags = {};
@@ -75,21 +92,9 @@ module.exports = async (req, res) => {
     sum_tags["נותר"] = {sum: total_recieved-total_spent, color: "gray"};
   }
 
-  var tag_values = Object.keys(sum_tags);
-  var tag_colors = [];
-  var tag_sums = [];
-
-  for (let tag of tag_values) {
-    tag_colors.push(sum_tags[tag].color);
-    tag_sums.push(sum_tags[tag].sum);
-  }
-
   res.render("summary", {
     remaining_sum: total_recieved-total_spent,
-    spending_circle: {
-      labels: tag_values,
-      colors: tag_colors,
-      data: tag_sums
-    }
+    spending_circle: getChartJsObject(sum_tags),
+    earning_circle: getChartJsObject(recieve_tags)
   })
 };
