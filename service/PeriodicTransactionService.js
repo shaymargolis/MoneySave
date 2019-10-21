@@ -7,7 +7,7 @@ const TransactionTagService = require('./TransactionTagService');
 class PeriodicTransactionService {
   static createTransaction(period, sum, transaction_type) {
     var new_t = new PeriodicTransaction({
-      period: datetime,
+      period: period,
       sum: sum,
       _transaction_type: transaction_type
     });

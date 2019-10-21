@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
     moment(body.datetime, format="DD/MM/YYYY HH:mm"),
     body.sum,
     body.type,
-    body.tags
+    body.tag
   ).then(function(trans) {
     res.redirect('/trans/all?action=createTransaction&result=success')
   }).catch(function() {

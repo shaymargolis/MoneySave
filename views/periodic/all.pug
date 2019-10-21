@@ -34,7 +34,9 @@ block content
                   p הכנסה
               td !{transaction.sum} ₪
               td !{transaction._transaction_type.title}
-              td !{transaction._transaction_type._transaction_tag.title}
+              td 
+                if (transaction._transaction_type._transaction_tag != null)
+                  p !{transaction._transaction_type._transaction_tag.title}
               td
                 a.btn.btn-primary(href="/periodic/"+transaction._id+"/delete") מחק
   else

@@ -19,10 +19,10 @@ module.exports = async (req, res) => {
     body.period,
     body.sum,
     body.type,
-    body.tags
-  ).then(function(trans) {
+    body.tag
+  ).catch(function(err) {
+    res.status(500).json({err: err})
+  }).then(function(trans) {
     res.redirect('/periodic/all?action=createTransaction&result=success')
-  }).catch(function() {
-    res.status(500).json({})
   })
 };
