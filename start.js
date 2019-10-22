@@ -1,7 +1,18 @@
+// Read env
+const dotenv = require('dotenv');
+dotenv.config();
+
+// Read errors
+const domain = require('domain'),
+d = domain.create();
+
+d.on('error', function(err) {
+  console.error(err);
+});
+
 // Connect to mongoose
 const mongoose = require('mongoose');
-
-mongoose.connect('mongodb://localhost/moneysave', { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 mongoose.connection
   .on('connected', () => {
