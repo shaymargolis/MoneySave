@@ -17,15 +17,27 @@ block content
           li= error.msg
 
   div.row
-    form(action="/trans/create" method="POST" class="form-registration")
+    form(action=action_url method="POST" class="form-registration")
       div.col-sm
-        h1 הוספת עסקה
+        if edit
+          h1 עריכת עסקה
+        else
+          h1 הוספת עסקה
         
         div.btn-group.btn-group-toggle(data-toggle="buttons")
           label.btn.btn-secondary.active הוצאה
             input(type="radio", id="is_outcome_yes", name="is_outcome", value="true", autocomplete="off", checked)
           label.btn.btn-secondary הכנסה
             input(type="radio", id="is_outcome_no", name="is_outcome", value="false", autocomplete="off")
+
+        script.
+          function toggleIsOutcome(is_outcome) {
+            if (is_outcome) {
+              $("#is_outcome_yes").click();
+            } else {
+              $("#is_outcome_no").click();
+            }
+          }
 
         br
         br
@@ -36,7 +48,7 @@ block content
           id="type"
           name="type"
           class="form-control"
-          value=data.type
+          value=(data._transaction_type ? data._transaction_type.title : "")
         )
 
         script.
@@ -59,14 +71,8 @@ block content
           });
           
           $('#type').on('typeahead:selected', function(evt, item) {
-              $("#tags").tagsinput("removeAll");
-              $("#tags").tagsinput('add', item._transaction_tag);
-              
-              if (item.is_outcome) {
-                $("#is_outcome_yes").click();
-              } else {
-                $("#is_outcome_no").click();
-              }
+              addItemToTags(item._transaction_tag);
+              toggleIsOutcome(item.is_outcome);
           })
         
         label(for="datetime") תאריך:
@@ -76,7 +82,9 @@ block content
 
           input.form-control(
             id='datetime',
-            type="text", placeholder="dd/mm/YYYY HH:mm", value=data.datetime, name='datetime'
+            type="text", placeholder="dd/mm/YYYY HH:mm",
+            value=(data.datetime ? moment(data.datetime).format("DD/MM/YYYY HH:mm") : ""),
+            name='datetime'
             aria-describedby="basic-addon1"
           )
 
@@ -135,10 +143,21 @@ block content
             itemValue: 'title',
             itemText: 'title',
           });
+          
+          function addItemToTags(item) {
+            $("#tags").tagsinput("removeAll");
+            $("#tags").tagsinput('add', item);
+          }
+          
+          $(function () {
+            !{(data._transaction_type ? "addItemToTags("+JSON.stringify(data._transaction_type._transaction_tag)+")" : "")}
+            !{(data._transaction_type ? "toggleIsOutcome("+data._transaction_type.is_outcome+")" : "")}
+          });
 
         br
 
-        button(type="submit", class="btn btn-primary") הוספה
+        button(type="submit", class="btn btn-primary")
+          span !{edit ? "עדכן" : "הוספה"}
 
         script.
           $(document).ready(function() {
