@@ -22,8 +22,10 @@ block content
           each tag in tag_list
             tr
               td !{tag.title}
-              td !{tag.color}
               td
-                a.btn.btn-primary(href="/tags/"+tag._id+"/delete") מחק
+                span(style="background-color:"+tag.color) !{tag.color}
+              td
+                a.btn.btn-primary.mr-1(href="/tags/"+tag._id+"/edit") ערוך
+                a.btn.btn-danger(href="/tags/"+tag._id+"/delete") מחק
   else
     div.row לא נמצאו תגיות.

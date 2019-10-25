@@ -16,31 +16,38 @@ block content
         li= error.msg
 
   div.row
-    form(action="/tags/create" method="POST" class="form-registration")
-      h1 הוספת תגית
+    form(action=action_url method="POST" class="form-registration")
+      div.col-sm
+        if edit
+          h1 עריכת תגית
+        else
+          h1 הוספת תגית
 
-      label(for="title") שם:
-      input(
-        type="text"
-        id="title"
-        name="title"
-        class="form-control"
-        value=data.title
-      )
+        label(for="title") שם:
+        input(
+          type="text"
+          id="title"
+          name="title"
+          class="form-control"
+          value=data.title
+        )
 
-      label(for="color") צבע:
-      select.form-control(
-        id="color"
-        name="color"
-      )
-        option black
-        option blue
-        option orange
-        option purple
-        option cyan
-        option green
-        option gray
-        option pink
-        option yellow
+        label(for="color") צבע:
+        select.form-control(
+          id="color"
+          name="color"
+        )
+          option(selected="selected", hidden="hidden")
+            span !{data.color}
+          option black
+          option blue
+          option orange
+          option purple
+          option cyan
+          option green
+          option gray
+          option pink
+          option yellow
 
-      button(type="submit", class="btn btn-primary") הוספה
+        button(type="submit", class="btn btn-primary")
+          span !{edit ? "עדכן" : "הוספה"}
