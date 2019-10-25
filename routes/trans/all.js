@@ -11,6 +11,7 @@ module.exports = async (req, res) => {
     }).sort({"datetime": -1});
 
   res.render("trans/all", {
+    page: "transactions",
     trans_list: all,
     action: req.query.action,
     result: req.query.result,

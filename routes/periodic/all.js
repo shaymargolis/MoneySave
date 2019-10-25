@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
       }
     }).exec(function(err, all) {
     res.render("periodic/all", {
+      page: "periodic",
       periodic_list: all,
       action: req.query.action,
       result: req.query.result,

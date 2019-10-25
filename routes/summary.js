@@ -82,6 +82,7 @@ module.exports = async (req, res) => {
   }
 
   res.render("summary", {
+    page: "summary",
     remaining_sum: total_earned-total_spent,
     spending_circle: getChartJsObject(spent_tags),
     earning_circle: getChartJsObject(earned_tags)

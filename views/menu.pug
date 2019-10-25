@@ -6,15 +6,15 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.static-top
 
     div.collapse.navbar-collapse#navbarResponsive
       ul.navbar-nav.ml-auto
-        li.nav-item.active#summary
+        li.nav-item(class=(page=="summary" ? "active" : ""))#summary
           a.nav-link(href="/summary") סקירה
-        li.nav-item#trans
+        li.nav-item(class=(page=="transactions" ? "active" : ""))#trans
           a.nav-link(href="/trans/all") עסקות
-        li.nav-item#periodic
+        li.nav-item(class=(page=="periodic" ? "active" : ""))#periodic
           a.nav-link(href="/periodic/all") חודשיות
-        li.nav-item#tags_navitem
+        li.nav-item(class=(page=="tags" ? "active" : ""))#tags_navitem
           a.nav-link(href="/tags/all") תגיות
-        li.nav-item#shared
+        li.nav-item(class=(page=="shared" ? "active" : ""))#shared
           a.nav-link(href="/shared/all") הזמנות משותפות
-        li.nav-item#settings
+        li.nav-item(class=(page=="settings" ? "active" : ""))#settings
           a.nav-link(href="/settings") הגדרות
