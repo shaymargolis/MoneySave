@@ -15,6 +15,7 @@ module.exports = async (req, res) => {
   res.render("periodic/create", {
     edit: true,
     data: transaction,
-    moment: require('moment')
+    moment: require('moment'),
+    action_url: "/periodic/"+transaction._id+"/edit"
   });
 };
