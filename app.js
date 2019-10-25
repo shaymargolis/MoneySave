@@ -15,6 +15,8 @@ app.use(express.static('public'));
 app.use('/', routes);
 
 // Turn on that server!
-app.listen(80, () => {
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
   console.log('App listening on port 80');
 });
