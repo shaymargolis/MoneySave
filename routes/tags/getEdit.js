@@ -13,6 +13,6 @@ module.exports = async (req, res) => {
   res.render("tags/create", {
     edit: true,
     action_url: "/tags/"+req.tag._id+"/edit",
-    data: tag
+    data: req.tag
   });
 };
