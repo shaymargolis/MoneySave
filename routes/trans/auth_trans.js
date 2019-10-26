@@ -9,7 +9,10 @@ const auth = async (req,res,next) => {
     return;
   }
 
-  if (trans._user._id !== res.user._id) {
+  console.log(trans._user._id);
+  console.log(req.user._id);
+
+  if (trans._user._id !== req.user._id) {
     res.status(401).send("Not your transaction");
     return;
   }

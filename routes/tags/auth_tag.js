@@ -9,7 +9,7 @@ const auth = async (req,res,next) => {
     return;
   }
 
-  if (tag._user._id !== res.user._id) {
+  if (tag._user._id !== req.user._id) {
     res.status(401).send("Not your tag");
     return;
   }
