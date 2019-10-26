@@ -11,10 +11,8 @@ const TransactionTag = mongoose.model("TransactionTag");
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var user = await User.findOne({ _id: "5d9c6f8640c69501a866cf07" });
-
   PeriodicTransactionService.newTransaction(
-    user,
+    req.user,
     body.is_outcome,
     body.start_month,
     body.end_month,

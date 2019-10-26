@@ -17,8 +17,7 @@ function createTransactionTag(title, color, user) {
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var user = await User.findOne({ _id: "5d9c6f8640c69501a866cf07" });
-  var tag = createTransactionTag(body.title, body.color, user);
+  var tag = createTransactionTag(body.title, body.color, req.user);
   tag.save();
 
   res.redirect("/tags/all")

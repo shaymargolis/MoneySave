@@ -12,10 +12,8 @@ const TransactionTag = mongoose.model("TransactionTag");
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var user = await User.findOne({ _id: "5d9c6f8640c69501a866cf07" });
-
   TransactionService.newTransaction(
-    user,
+    req.user,
     body.is_outcome,
     moment(body.datetime, format="DD/MM/YYYY HH:mm"),
     body.sum,
