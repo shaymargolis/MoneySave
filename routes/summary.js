@@ -1,6 +1,7 @@
 const moment = require('moment');
 const mongoose = require('mongoose');
 
+const User = mongoose.model("User");
 const Transaction = mongoose.model("Transaction");
 const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 const TransactionType = mongoose.model("TransactionType");
@@ -23,13 +24,14 @@ function getChartJsObject(tags) {
   };
 }
 
-async function getTagDescriptions(tags, is_outcome) {
+async function getTagDescriptions(tags, is_outcome, user) {
   var total_sum = 0;
   var tag_desc = {};
 
   for (let tag of tags) {
     var trans_types = await TransactionType.find({
       _transaction_tag: tag._id,
+      _user: user,
       is_outcome: is_outcome
     });
 
@@ -67,10 +69,14 @@ async function getTagDescriptions(tags, is_outcome) {
 }
 
 module.exports = async (req, res) => {
-  var tags = await TransactionTag.find();
+  var user = await User.findOne({ _id: "5d9c6f8640c69501a866cf07" });
 
-  var spent = await getTagDescriptions(tags, true);
-  var earned = await getTagDescriptions(tags, false);
+  var tags = await TransactionTag.find({
+    _user: user
+  });
+
+  var spent = await getTagDescriptions(tags, true, user);
+  var earned = await getTagDescriptions(tags, false, user);
 
   var total_spent = spent.total_sum;
   var spent_tags = spent.tag_desc;

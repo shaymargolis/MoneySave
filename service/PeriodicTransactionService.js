@@ -38,7 +38,7 @@ class PeriodicTransactionService {
   }
 
   static async newTransaction(user, is_outcome, start_month, end_month, sum, transaction_type_title, tag) {
-      var tag_obj = await TransactionTagService.findTagByTitle(tag);
+      var tag_obj = await TransactionTagService.findTagByTitle(tag, user);
       var transaction_type = await TransactionTypeService.updateOrCreateByTitle(transaction_type_title, is_outcome, user, tag_obj);
 
       var trans = this.createTransaction(start_month, end_month, sum, transaction_type);
@@ -58,7 +58,7 @@ class PeriodicTransactionService {
   }
 
   static async updateTransaction(transaction, user, is_outcome, start_month, end_month, sum, transaction_type_title, tag) {
-      var tag_obj = await TransactionTagService.findTagByTitle(tag);
+      var tag_obj = await TransactionTagService.findTagByTitle(tag, user);
       var transaction_type = await TransactionTypeService.updateOrCreateByTitle(transaction_type_title, is_outcome, user, tag_obj);
 
       this.updateTransaction(transaction, start_month, end_month, sum, transaction_type)
