@@ -6,7 +6,7 @@ module.exports = async (req, res) => {
   var body = req.body;
 
   if (req.tag) {
-    transaction.delete();
+    req.tag.delete();
     res.redirect("/tags/all/?action=deleteTransaction&result=success");
     return;
   }
