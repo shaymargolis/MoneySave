@@ -16,7 +16,7 @@ block main
       div.col-sm
         h3 הוצאות
         
-        canvas(id="month-spending-chart", width="300", height="400")
+        canvas(id="month-spending-chart", style="width:100%;")
         script.
           new Chart($("#month-spending-chart"), {
               type: 'doughnut',
@@ -29,15 +29,12 @@ block main
                     data: !{JSON.stringify(spending_circle.data)}
                   }
                 ]
-              },
-              options: {
-                responsive: false
               }
           });
       div.col-sm
         h3 הכנסות
         
-        canvas(id="month-earning-chart", width="300", height="400")
+        canvas(id="month-earning-chart", style="width:100%;")
         script.
           new Chart($("#month-earning-chart"), {
               type: 'doughnut',
@@ -50,9 +47,6 @@ block main
                     data: !{JSON.stringify(earning_circle.data)}
                   }
                 ]
-              },
-              options: {
-                responsive: false
               }
           });
       
