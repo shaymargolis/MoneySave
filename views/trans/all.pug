@@ -2,42 +2,52 @@ extends layout
 
 block content
   -data = data || {}
-
+  
   if action
     div.row
       p !{action}, !{result}
 
+  br
+
   div.row
     a.btn.btn-primary(href="/trans/create") הוספה
+  
+  br
 
   if (trans_list.length != 0)
     div.row
       table.table.table-striped
         thead
           tr
-            th(scope="col") תאריך
-            th(scope="col") סוג
+            th(scope="col") פרטים
             th(scope="col") סכום
-            th(scope="col") שם
-            th(scope="col") תגיות
             th(scope="col") פעולות
         tbody
           each transaction in trans_list
             tr
-              td !{moment(transaction.datetime).format("DD/MM/YYYY HH:mm")}
               td
-                if (transaction._transaction_type.is_outcome == true)
-                  p הוצאה
-                else
-                  p הכנסה
-              td !{transaction.sum} ₪
-              td !{transaction._transaction_type.title}
-              td 
-                if (transaction._transaction_type._transaction_tag != null)
-                  p !{transaction._transaction_type._transaction_tag.title}
-              td
-                a.btn.btn-primary.mr-1(href="/trans/"+transaction._id+"/edit") ערוך
-                a.btn.btn-danger(href="/trans/"+transaction._id+"/delete") מחק
+                ul.list-unstyled
+                  li
+                    i.mr-2.fa.fa-search
+                    if (transaction._transaction_type.is_outcome == true)
+                      b הוצאה
+                    else 
+                      b הכנסה
+                    span &#32;-&#32;
+                    if (transaction._transaction_type._transaction_tag != null)
+                      span !{transaction._transaction_type.title}
+                  li
+                    i.mr-2.fa.fa-calendar
+                    span !{moment(transaction.datetime).format("DD/MM/YYYY HH:mm")}
+                  li
+                    i.mr-2.fa.fa-tags
+                    span !{transaction._transaction_type._transaction_tag.title}
+                td
+                  span !{transaction.sum} ₪  
+                td
+                  div.btn-group-vertical
+                    a.btn.btn-primary.mr-1(href="/trans/"+transaction._id+"/edit") ערוך
+                    a.btn.btn-danger(href="/trans/"+transaction._id+"/delete") מחק
   else
     div.row
       p לא נמצאו עסקות.
