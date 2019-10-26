@@ -16,7 +16,7 @@ block main
       div.col-sm
         h3 הוצאות
         
-        canvas(id="month-spending-chart", width="500", height="400")
+        canvas(id="month-spending-chart", width="300", height="400")
         script.
           new Chart($("#month-spending-chart"), {
               type: 'doughnut',
@@ -37,7 +37,7 @@ block main
       div.col-sm
         h3 הכנסות
         
-        canvas(id="month-earning-chart", width="500", height="400")
+        canvas(id="month-earning-chart", width="300", height="400")
         script.
           new Chart($("#month-earning-chart"), {
               type: 'doughnut',
