@@ -69,7 +69,7 @@ async function getTagDescriptions(tags, is_outcome, user) {
 }
 
 module.exports = async (req, res) => {
-  var user = await User.findOne({ _id: "5d9c6f8640c69501a866cf07" });
+  var user = req.user;
 
   var tags = await TransactionTag.find({
     _user: user
