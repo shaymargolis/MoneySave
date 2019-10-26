@@ -24,6 +24,8 @@ module.exports = routes;
 // Add another paths
 routes.use('/user', require('./user'));
 routes.use('/settings', require('./settings'));
+routes.use('/saving', require('./saving'));
+routes.use('/shared', require('./shared'));
 routes.use('/trans', require('./trans'));
 routes.use('/periodic', require('./periodic'));
 routes.use('/tags', require('./tags'));
