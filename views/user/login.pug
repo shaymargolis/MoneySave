@@ -1,20 +1,24 @@
 extends ../layout
 
 block main
-  div.wrapper
-    div.form-signin
-      h1= title
-      form(action="/user/login", method="post", class="form-registration")
-        div(class="form-group")
-          label(for="username") שם משתמש
-          input(class="form-control" type="text",name="username" placeholder="Username" autofocus)
-        div(class="form-group")    
-          label(for="password") סיסמה
-          input(class="form-control" type="password",name="password" placeholder="Password")
-        div(class="form-group")  
-          div(class="text-right")
-            label(class="form-check-label") זכור אותי 
-              input(type="checkbox") 
-        div(class="form-group")
-          div(class="text-right")
-            button(class="btn btn-primary" type="submit") התחבר 
+  div.container
+    br
+    div.row
+      h2 התחבר
+    br
+    div.row
+      div.col-sm-4
+        form(action="/user/login", method="post", class="form-registration")
+          div(class="form-group")
+            label(for="username") שם משתמש
+            input(class="form-control" type="text",name="username" placeholder="שם משתמש" autofocus)
+          div(class="form-group")    
+            label(for="password") סיסמה
+            input(class="form-control" type="password",name="password" placeholder="סיסמה")
+          div(class="form-group")  
+            div(class="text-right")
+              label(class="form-check-label") זכור אותי 
+                input(type="checkbox") 
+          div(class="form-group")
+            div(class="text-right")
+              button(class="btn btn-primary" type="submit") התחבר 

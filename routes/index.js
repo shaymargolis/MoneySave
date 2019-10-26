@@ -23,6 +23,7 @@ module.exports = routes;
 
 // Add another paths
 routes.use('/user', require('./user'));
+routes.use('/settings', require('./settings'));
 routes.use('/trans', require('./trans'));
 routes.use('/periodic', require('./periodic'));
 routes.use('/tags', require('./tags'));

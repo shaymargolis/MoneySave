@@ -1,0 +1,42 @@
+extends layout
+
+block content
+  -data = data || {}
+  
+  br
+  
+  div.row
+    h2 הגדרות
+  
+  br
+  
+  div.row
+    div.col-sm-4
+      div.list-group
+        li.list-group-item
+          div.d-flex.w-100.justify-content-between
+            h5.mb-1 מחובר: !{data.user.username}
+            
+            span.pull-right
+              a.btn.btn-danger(
+                href="/user/logout"
+                )
+                span התנתק
+        li.list-group-item
+          div.d-flex.w-100.justify-content-between
+            h5.mb-1 תגיות
+            
+            span.pull-right
+              a.btn.btn-primary(
+                href="/tags/all"
+                )
+                span הצג
+        li.list-group-item
+          div.d-flex.w-100.justify-content-between
+            h5.mb-1 עסקות חודשיות
+            
+            span.pull-right
+              a.btn.btn-primary(
+                href="/periodic/all"
+                )
+                span הצג
