@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 
 const auth = async (req,res,next) => {
-  var periodic = await PeriodicTransaction.findOne({ _id: req.params.id }).populate("_user");
+  var periodic = await PeriodicTransaction.findOne({ _id: req.params.id });
 
   if (!periodic) {
     next();

@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  var transaction = await req.periodic.populate({
+  var transaction = await PeriodicTransaction.populate(req.periodic, {
     path: "_transaction_type",
     populate: {
       path: "_transaction_tag",

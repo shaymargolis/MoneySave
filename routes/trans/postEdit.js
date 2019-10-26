@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  transaction = await transaction.populate({
+  transaction = await Transaction.populate(transaction, {
     path: "_transaction_type",
     populate: {
       path: "_transaction_tag",
