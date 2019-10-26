@@ -14,39 +14,56 @@ block main
 
     div.row
       div.col-sm
-        h3 הוצאות
-        
-        canvas(id="month-spending-chart", style="width:100%;")
-        script.
-          new Chart($("#month-spending-chart"), {
-              type: 'doughnut',
-              data: {
-                labels: !{JSON.stringify(spending_circle.labels)},
-                datasets: [
-                  {
-                    label: "סכום (₪)",
-                    backgroundColor: !{JSON.stringify(spending_circle.colors)},
-                    data: !{JSON.stringify(spending_circle.data)}
+        div.card
+          div.card-header הוצאות
+          div.card-body            
+            canvas(id="month-spending-chart", style="width:100%;")
+            script.
+              new Chart($("#month-spending-chart"), {
+                  type: 'doughnut',
+                  data: {
+                    labels: !{JSON.stringify(spending_circle.labels)},
+                    datasets: [
+                      {
+                        label: "סכום (₪)",
+                        backgroundColor: !{JSON.stringify(spending_circle.colors)},
+                        data: !{JSON.stringify(spending_circle.data)}
+                      }
+                    ]
                   }
-                ]
-              }
-          });
+              });
       div.col-sm
-        h3 הכנסות
-        
-        canvas(id="month-earning-chart", style="width:100%;")
-        script.
-          new Chart($("#month-earning-chart"), {
-              type: 'doughnut',
-              data: {
-                labels: !{JSON.stringify(earning_circle.labels)},
-                datasets: [
-                  {
-                    label: "סכום (₪)",
-                    backgroundColor: !{JSON.stringify(earning_circle.colors)},
-                    data: !{JSON.stringify(earning_circle.data)}
+        div.card
+          div.card-header הכנסות
+          div.card-body            
+            canvas(id="month-earning-chart", style="width:100%;")
+            script.
+              new Chart($("#month-earning-chart"), {
+                  type: 'doughnut',
+                  data: {
+                    labels: !{JSON.stringify(earning_circle.labels)},
+                    datasets: [
+                      {
+                        label: "סכום (₪)",
+                        backgroundColor: !{JSON.stringify(earning_circle.colors)},
+                        data: !{JSON.stringify(earning_circle.data)}
+                      }
+                    ]
                   }
-                ]
-              }
-          });
+              });
+    
+    br
+    div(style="clear:both;")
       
+    div.row
+      h4.mr-4 עסקות אחרונות
+      span.pull-right
+        a.btn.btn-primary(
+          href="/trans/all"
+          )
+          span הכל
+          
+    br
+    
+    include trans/list.pug
+    

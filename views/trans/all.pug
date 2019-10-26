@@ -14,40 +14,4 @@ block content
   
   br
 
-  if (trans_list.length != 0)
-    div.row
-      table.table.table-striped
-        thead
-          tr
-            th(scope="col") פרטים
-            th(scope="col") סכום
-            th(scope="col") פעולות
-        tbody
-          each transaction in trans_list
-            tr
-              td
-                ul.list-unstyled
-                  li
-                    i.mr-2.fa.fa-search
-                    if (transaction._transaction_type.is_outcome == true)
-                      b הוצאה
-                    else 
-                      b הכנסה
-                    span &#32;-&#32;
-                    if (transaction._transaction_type._transaction_tag != null)
-                      span !{transaction._transaction_type.title}
-                  li
-                    i.mr-2.fa.fa-calendar
-                    span !{moment(transaction.datetime).format("DD/MM/YYYY HH:mm")}
-                  li
-                    i.mr-2.fa.fa-tags
-                    span !{transaction._transaction_type._transaction_tag.title}
-                td
-                  span !{transaction.sum} ₪  
-                td
-                  div.btn-group-vertical
-                    a.btn.btn-primary.mr-1(href="/trans/"+transaction._id+"/edit") ערוך
-                    a.btn.btn-danger(href="/trans/"+transaction._id+"/delete") מחק
-  else
-    div.row
-      p לא נמצאו עסקות.
+  include list.pug

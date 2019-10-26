@@ -87,10 +87,23 @@ module.exports = async (req, res) => {
     spent_tags["נותר"] = {sum: total_earned-total_spent, color: "gray"};
   }
 
+  var all = await Transaction.find({
+    _user: req.user
+  })
+  .limit(3)
+  .populate({
+      path: "_transaction_type",
+      populate: {
+        path: "_transaction_tag",
+      }
+  }).sort({"datetime": -1});
+
   res.render("summary", {
     page: "summary",
     remaining_sum: total_earned-total_spent,
     spending_circle: getChartJsObject(spent_tags),
-    earning_circle: getChartJsObject(earned_tags)
+    earning_circle: getChartJsObject(earned_tags),
+    moment: require('moment'),
+    trans_list: all
   })
 };
