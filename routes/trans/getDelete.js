@@ -5,7 +5,7 @@ const Transaction = mongoose.model("Transaction");
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var transaction = await Transaction.findOne({ _id: req.params.id });
+  var transaction = req.trans;
 
   if (transaction) {
     transaction.delete();

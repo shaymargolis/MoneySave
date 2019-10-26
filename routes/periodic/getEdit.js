@@ -5,7 +5,7 @@ const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var transaction = await PeriodicTransaction.findOne({ _id: req.params.id }).populate({
+  var transaction = req.periodic.populate({
     path: "_transaction_type",
     populate: {
       path: "_transaction_tag",

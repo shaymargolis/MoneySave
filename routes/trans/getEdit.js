@@ -5,7 +5,7 @@ const Transaction = mongoose.model("Transaction");
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var transaction = await Transaction.findOne({ _id: req.params.id }).populate({
+  var transaction = req.trans.populate({
     path: "_transaction_type",
     populate: {
       path: "_transaction_tag",

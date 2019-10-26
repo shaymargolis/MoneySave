@@ -5,7 +5,7 @@ const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 module.exports = async (req, res) => {
   var body = req.body;
 
-  var transaction = await PeriodicTransaction.findOne({ _id: req.params.id });
+  var transaction = req.periodic;
 
   if (transaction) {
     transaction.delete();
