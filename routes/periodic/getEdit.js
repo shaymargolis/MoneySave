@@ -5,6 +5,11 @@ const PeriodicTransaction = mongoose.model("PeriodicTransaction");
 module.exports = async (req, res) => {
   var body = req.body;
 
+  if (!req.periodic) {
+    res.status(404).send("Not found");
+    return;
+  }
+
   var transaction = req.periodic.populate({
     path: "_transaction_type",
     populate: {

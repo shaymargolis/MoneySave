@@ -5,6 +5,11 @@ const Transaction = mongoose.model("Transaction");
 module.exports = async (req, res) => {
   var body = req.body;
 
+  if (!req.trans) {
+    res.status(404).send("Not found");
+    return;
+  }
+
   var transaction = req.trans.populate({
     path: "_transaction_type",
     populate: {

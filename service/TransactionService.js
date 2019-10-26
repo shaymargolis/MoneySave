@@ -12,6 +12,7 @@ class TransactionService {
       var new_t = new Transaction({
         datetime: datetime,
         sum: sum,
+        _user: user,
         _transaction_type: transaction_type
       });
 

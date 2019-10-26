@@ -22,14 +22,15 @@ class PeriodicTransactionService {
     }
   }
 
-  static createTransaction(start_month, end_month, sum, transaction_type) {
+  static createTransaction(user, start_month, end_month, sum, transaction_type) {
     var dates = this.getDates(start_month, end_month);
 
     var new_t = new PeriodicTransaction({
       start_month: dates.start_month_date,
       end_month: dates.end_month_date,
       sum: sum,
-      _transaction_type: transaction_type
+      _transaction_type: transaction_type,
+      _user: user,
     });
 
     new_t.save();
@@ -41,7 +42,7 @@ class PeriodicTransactionService {
       var tag_obj = await TransactionTagService.findTagByTitle(tag, user);
       var transaction_type = await TransactionTypeService.updateOrCreateByTitle(transaction_type_title, is_outcome, user, tag_obj);
 
-      var trans = this.createTransaction(start_month, end_month, sum, transaction_type);
+      var trans = this.createTransaction(user, start_month, end_month, sum, transaction_type);
 
       return trans;
   }
