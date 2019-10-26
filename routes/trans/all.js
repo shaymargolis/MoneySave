@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const Transaction = mongoose.model("Transaction");
 
 module.exports = async (req, res) => {
-  var all = await Transaction.find().populate({
+  var all = await Transaction.find({
+    _user: req.user
+  }).populate({
       path: "_transaction_type",
       populate: {
         path: "_transaction_tag",
