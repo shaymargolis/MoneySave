@@ -50,8 +50,8 @@ class PeriodicTransactionService {
   static updateTransaction(trans, is_outcome, start_month, end_month, sum, transaction_type_title, tag) {
       var dates = this.getDates(start_month, end_month);
 
-      transaction.start_month = start_month_date;
-      transaction.end_month = end_month_date;
+      transaction.start_month = dates.start_month_date;
+      transaction.end_month = dates.end_month_date;
       transaction.sum = sum;
       transaction._transaction_type = transaction_type;
 
